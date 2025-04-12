@@ -1,0 +1,40 @@
+name: PR Validation Check
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  validate:
+    name: Check-Only Validation in Salesforce
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Salesforce CLI
+        uses: salesforcecli/github-action@v2
+        with:
+          version: latest
+
+      - name: Authenticate to Salesforce
+        run: |
+          echo "${{ secrets.SF_JWT_KEY }}" > server.key
+          sf org login jwt \
+            --client-id ${{ secrets.SF_CLIENT_ID }} \
+            --jwt-key-file server.key \
+            --username ${{ secrets.SF_USERNAME }} \
+            --alias pr-validate-org \
+            --set-default
+
+      - name: Run check-only deploy
+        run: |
+          sf project deploy validate \
+            --target-org pr-validate-org \
+            --ignore-warnings \
+            --test-level RunLocalTests
+
+      - name: Clean up auth file
+        run: rm server.key
