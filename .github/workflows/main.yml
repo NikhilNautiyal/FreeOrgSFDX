@@ -17,6 +17,10 @@ jobs:
       - name: Set up Salesforce CLI
         run: npm install -g @salesforce/cli@latest
 
+      - name: Write JWT key to file
+        run: |
+            echo "${{ secrets.SF_JWT_KEY }}" | base64 -d > server.key
+
       - name: Authenticate to Salesforce
         run: |
           echo "${{ secrets.SF_JWT_KEY }}" > server.key
