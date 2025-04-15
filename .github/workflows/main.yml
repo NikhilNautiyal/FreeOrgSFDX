@@ -21,13 +21,12 @@ jobs:
         run: npm install -g @salesforce/cli@latest
 
       - name: Write JWT key to file
-        if: false
+        #if: false
         run: |
             echo "${{ secrets.SF_JWT_KEY }}" | base64 -d > server.key
 
       - name: Authenticate to Salesforce
         run: |
-          echo "${{ secrets.SF_JWT_KEY }}" > server.key
           sf org login jwt \
             --client-id ${{ secrets.SF_CLIENT_ID }} \
             --jwt-key-file server.key \
