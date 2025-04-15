@@ -22,7 +22,11 @@ jobs:
         run: |
             printf '%s' "${{ secrets.SF_JWT_KEY }}" > server.key
             #echo "${{ secrets.SF_JWT_KEY }}" | > server.key
-            ls -l server.key
+
+      - name: Check key file
+        run: |
+          ls -l server.key
+          head -n 5 server.key
 
       - name: Authenticate to Salesforce
         run: |
