@@ -44,6 +44,7 @@ jobs:
         run: |
           sf project deploy validate \
             --target-org pr-validate-org \
+            --source-dir force-app \
             --ignore-warnings \
             --test-level RunLocalTests
 
