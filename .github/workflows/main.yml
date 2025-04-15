@@ -21,6 +21,7 @@ jobs:
         #if: false
         run: |
             echo "${{ secrets.SF_JWT_KEY }}" | > server.key
+            ls -l server.key
 
       - name: Authenticate to Salesforce
         run: |
