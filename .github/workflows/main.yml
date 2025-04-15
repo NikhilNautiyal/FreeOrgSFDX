@@ -19,9 +19,12 @@ jobs:
 
       - name: Write JWT key to file
         #if: false
+        env: 
+          SF_JWT_KEY: ${{ secrets.SF_JWT_KEY }}
         run: |
-            printf '%s' "${{ secrets.SF_JWT_KEY }}" > server.key
-            #echo "${{ secrets.SF_JWT_KEY }}" | > server.key
+            printf '%s' "$SF_JWT_KEY" > server.key
+            ls -l server.key
+            head -n 5 server.key
 
       - name: Check key file
         run: |
