@@ -13,10 +13,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v1
-
-      - name: Print JWT Key
-        run: cat server.key
-        
+       
       - name: Set up Salesforce CLI
         run: npm install -g @salesforce/cli@latest
 
